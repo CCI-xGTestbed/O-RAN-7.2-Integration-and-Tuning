@@ -78,6 +78,7 @@ sudo ./srsdu -c ../[PATH_TO]/ran650_du.yml
 ```bash
 tail -f /tmp/logs/radio_status
 ```
+<img width="1352" height="707" alt="image" src="https://github.com/user-attachments/assets/b9f547b0-11c1-4024-83ad-029d53341c36" />
 
 Then press `Ctrl+C` and run:
 
@@ -86,6 +87,9 @@ cd /tmp/logs/
 TXMeanPower
 kpi.sh
 ```
+<img width="660" height="183" alt="image" src="https://github.com/user-attachments/assets/0d320234-b453-4332-a839-876639cb394e" />
+<img width="1362" height="187" alt="image" src="https://github.com/user-attachments/assets/de462a3f-68cb-408f-b3e7-375e40484c29" />
+
 
 When everything is working correctly, you should see:
 
