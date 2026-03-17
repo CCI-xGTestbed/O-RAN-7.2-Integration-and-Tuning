@@ -47,7 +47,7 @@ This guide documents the complete process to deploy srsRAN (commit 122a) with a 
 |-----------|---------|
 | **Server** | Dell PowerEdge with Intel(R) Xeon(R) Silver 4416+, 40 cores |
 | **OS** | Ubuntu 22.04.5 LTS with kernel 5.15.0-1032-realtime |
-| **NIC** | Intel E810XXVDA4TGG1 Quad Port 25/10GbE SFP28 Ethernet Network Adapter with IEEE 1588 PTP SyncE with GNSS Mezzanine |
+| **NIC** | Intel E810XXVDA4TGG1 Quad Port 25/10GbE SFP28 Ethernet Network Adapter with IEEE 1588  SyncE with GNSS Mezzanine |
 | **O-RU** | Benetel RAN650, Band n78 |
 | **SFPs** | 10G multimode SFP modules (HiFiber 10G base SR SFP+ 850 nm, 300 m) |
 | **Fiber** | OM4 multimode fiber |
@@ -250,6 +250,8 @@ ethtool -T enp13s0f0
 # Find all interfaces with the same subsystem device (replace {} with output of the first command)
 grep {} /sys/class/net/*/device/subsystem_device | awk -F"/" '{print $5}'
 ```
+
+We have provided our PTP Configuration file for usage with phc2sys in this repository, you are free to use it when you go to run.
 
 ---
 
