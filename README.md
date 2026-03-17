@@ -24,6 +24,7 @@ IEEE International Conference on Communications (ICC), Glasgow, Scotland, 2026**
 │   └── ru_config.cfg        # Benetel RAN650 RU configuration
 │
 ├── integration.md           # Step-by-step system preparation, O-RU integration, and RF Tuning.
+├── srs-ptp-gm.cfg           # PTP Configuration file
 ├── startup.md               # Step-by-step bring-up procedure for 5G Operation.
 └── README.md
 ```
