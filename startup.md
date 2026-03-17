@@ -46,6 +46,9 @@ The above ptp4l and phc2sys can also be configured to run as system services to 
 ```bash
 ssh root@10.10.0.100
 tail -f /var/log/pcm4l
+
+<img width="1362" height="306" alt="image" src="https://github.com/user-attachments/assets/c88e99e3-dabb-46c7-b227-14fea2243dab" />
+
 ```
 
 Wait until the offset stabilizes below ±100ns. The O-RU will also show a lock message on time and frequency.
