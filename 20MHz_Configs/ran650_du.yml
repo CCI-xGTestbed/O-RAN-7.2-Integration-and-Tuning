@@ -15,7 +15,7 @@ f1u:
 cell_cfg:
   dl_arfcn: 645000
   band: 78
-  channel_bandwidth_MHz: 40
+  channel_bandwidth_MHz: 20
   common_scs: 30
   tdd_ul_dl_cfg:
     dl_ul_tx_period: 10
@@ -83,7 +83,7 @@ ru_ofh:
   compr_bitwidth_prach: 9
   enable_ul_static_compr_hdr: false
   enable_dl_static_compr_hdr: false
-  iq_scaling: 13                                                             # IQ SCALING HERE
+  iq_scaling: 5.5                                                             # IQ SCALING HERE
   warn_unreceived_ru_frames: always
   cells:
     - network_interface: 0000:0b:01.0 #set to the PCI address of your fronthaul NIC for DPDK
