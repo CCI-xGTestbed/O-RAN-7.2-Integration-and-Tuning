@@ -15,8 +15,8 @@ cu_cp:
   #request_pdu_session_timeout: 3        # Optional INT (3). Timeout for the setup of a PDU session after an InitialUeMessage was sent to the core, in seconds. The timeout must be larger than T310. If the value is reached, the UE will be released
 
   amf:
-    addr: 10.147.20.193 # Replace this section with your AMF settings.
-    bind_addr: 10.147.20.193
+    addr: 127.0.0.5 # Replace this section with your AMF settings.
+    bind_addr: 127.0.0.10
     supported_tracking_areas: # List of tracking areas supported by this AMF. Note that the first PLMN is used for the Global RAN Node ID
       - tac: 7
         plmn_list:
@@ -26,12 +26,12 @@ cu_cp:
                 #sd: 1
 
   f1ap:
-    bind_addr: 127.0.0.40
+    bind_addr: 127.0.0.40 # Local bind address to associate to CU-CP
 
 cu_up:
   f1u:
     socket:
-      - bind_addr: 127.0.10.15
+      - bind_addr: 127.0.10.15 # Local bind address to associate CU-UP
 
 buffer_pool:
   nof_segments: 1048576
