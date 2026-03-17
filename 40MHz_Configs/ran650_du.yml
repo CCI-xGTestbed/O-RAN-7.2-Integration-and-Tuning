@@ -1,0 +1,156 @@
+gnb_id: 411
+gnb_id_bit_length: 32
+
+
+gnb_du_id: 0
+
+f1ap:
+  cu_cp_addr: 127.0.0.40
+  bind_addr: 127.0.0.40
+
+f1u:
+  socket: 127.0.10.15
+
+
+cell_cfg:
+  dl_arfcn: 645000
+  band: 78
+  channel_bandwidth_MHz: 40
+  common_scs: 30
+  tdd_ul_dl_cfg:
+    dl_ul_tx_period: 10
+    nof_dl_slots: 3
+    nof_dl_symbols: 6
+    nof_ul_slots: 6
+    nof_ul_symbols: 4
+  plmn: "00101"
+  tac: 7
+  pci: 1
+  ssb:
+    ssb_period: 10
+    ssb_block_power_dbm: 0
+
+  prach:
+    prach_config_index: 159
+    #prach_frequency_start: 0
+    prach_root_sequence_index: 1
+    zero_correlation_zone: 0
+
+  pucch:
+    sr_period_ms: 5
+    min_k1: 2
+    p0_nominal: -90 # Needs to be adjusted
+  csi:
+    csi_rs_period: 40
+
+  pdsch:
+    mcs_table: qam64
+    olla_target_bler: 0.1
+    olla_cqi_inc_step: 0.05
+    olla_max_cqi_offset: 20
+    dmrs_additional_position: 2 #2
+    max_nof_harq_retxs: 4
+    dc_offset: center
+    #min_ue_mcs: 0
+    #max_ue_mcs: 28
+  pusch:
+    mcs_table: qam64
+    olla_target_bler: 0.1
+    olla_snr_inc_step: 0.05
+    olla_max_snr_offset: 30
+    dmrs_additional_position: 2 #2
+    max_rank: 1
+    min_k2: 2
+    p0_nominal_with_grant: -78 # -76 default, -88 before
+  nof_antennas_dl: 4
+  nof_antennas_ul: 2
+
+ru_ofh:
+  t1a_max_cp_dl: 470
+  t1a_min_cp_dl: 419
+  t1a_max_cp_ul: 336
+  t1a_min_cp_ul: 285
+  t1a_max_up: 345
+  t1a_min_up: 294
+  ta4_max: 400
+  ta4_min: 0
+  is_prach_cp_enabled: true
+  compr_method_ul: bfp
+  compr_bitwidth_ul: 9
+  compr_method_dl: bfp
+  compr_bitwidth_dl: 9
+  compr_method_prach: bfp
+  compr_bitwidth_prach: 9
+  enable_ul_static_compr_hdr: false
+  enable_dl_static_compr_hdr: false
+  iq_scaling: 13                                                             # IQ SCALING HERE
+  warn_unreceived_ru_frames: always
+  cells:
+    - network_interface: 0000:0d:01.0
+      ru_mac_addr: 8c:1f:64:d1:12:b9
+      du_mac_addr: 6e:68:9f:fd:d4:75
+      vlan_tag_cp: 6
+      vlan_tag_up: 6
+      prach_port_id: [4, 5]
+      dl_port_id: [0, 1, 2, 3]
+      ul_port_id: [0, 1]
+
+hal:
+ eal_args: "--lcores (0-1)@(0-31) -a 0000:0d:01.0"
+
+expert_phy:
+  max_request_headroom_slots: 2 #0
+  max_proc_delay: 6 #4
+  pusch_dec_max_iterations: 10
+  pusch_channel_estimator_td_strategy: interpolate
+  pusch_channel_estimator_cfo_compensation: false
+  pusch_channel_equalizer_algorithm: mmse
+
+expert_execution:
+  threads:
+    upper_phy:
+      pdsch_processor_type: flexible
+      nof_pusch_decoder_threads: 4
+      nof_ul_threads: 4 #2
+      nof_dl_threads: 8 #4
+      pdsch_cb_batch_length: 8
+    ofh: #added
+      enable_dl_parallelization: true
+
+#test_mode:
+  #test_ue:
+    #rnti: 1234
+    #pdsch_active: true
+    #pusch_active: true
+    #ri: 4
+    #nof_ues: 1
+    #cqi: 15
+
+log:
+  # filename: stdout
+  all_level: warning
+  # phy_level: info
+  # rlc_level: info
+  # ofh_level: warning
+  # mac_level: debug
+  # broadcast_enabled: true
+
+metrics:
+  #autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true].
+  addr: 10.147.20.193                       # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address.
+  port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
+  enable_json: true                    # Optional BOOLEAN (false). Enable JSON metrics reporting
+  #enable_log: false                     # Optional BOOLEAN (false). Enable log metrics reporting
+
+  #layers:
+    #enable_app_usage: true               # Optional BOOLEAN (false). Enable application usage metrics
+    #enable_sched: true                    # Optional BOOLEAN (true). Enable DU scheduler metrics
+    #enable_rlc: true                     # Optional BOOLEAN (false). Enable RLC metrics
+    #enable_mac: true                     # Optional BOOLEAN (false). Enable MAC metrics
+    #enable_executor: true                # Optional BOOLEAN (false). Whether to log DU-high executor metrics
+    #enable_du_low: true                  # Optional BOOLEAN (false). Enable DU low metrics (upper physical layer)
+    #enable_ru: true                      # Optional BOOLEAN (false). Enable Radio Unit metrics
+
+  #periodicity:
+    #app_usage_report_period: 10000         # Optional UINT (1000). Application resource usage metrics report period in milliseconds
+    #du_report_period: 10000                # Optional UINT:INT (1000). DU statistics report period in milliseconds. Format: [0 - 10485760].

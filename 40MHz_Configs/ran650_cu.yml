@@ -1,0 +1,64 @@
+ran_node_name: cu_cp_01
+gnb_id: 411
+gnb_id_bit_length: 32
+
+
+gnb_cu_up_id: 0
+
+
+cu_cp:
+  #max_nof_dus:                          # Optional UINT. Maximum number of DU connections that the CU-CP may accept.
+  #max_nof_cu_ups:                       # Optional UINT. Maximum number of CU-UP connections that the CU-CP may accept.
+  #max_nof_ues:                          # Optional UINT. Maximum number of UEs that the CU-CP may accept.
+  #max_nof_drbs_per_ue:                  # Optional UINT. Maximum number of DRBs per UE. Supported: [1 - 29].
+  #inactivity_timer: 120                 # Optional INT (120). Sets the UE/PDU Session/DRB inactivity timer in seconds. Supported: [1 - 7200].
+  #request_pdu_session_timeout: 3        # Optional INT (3). Timeout for the setup of a PDU session after an InitialUeMessage was sent to the core, in seconds. The timeout must be larger than T310. If the value is reached, the UE will be released
+
+  amf:
+    addr: 10.147.20.193 # Replace this section with your AMF settings.
+    bind_addr: 10.147.20.193
+    supported_tracking_areas: # List of tracking areas supported by this AMF. Note that the first PLMN is used for the Global RAN Node ID
+      - tac: 7
+        plmn_list:
+          - plmn: "00101"
+            tai_slice_support_list:
+              - sst: 1
+                #sd: 1
+
+  f1ap:
+    bind_addr: 127.0.0.40
+
+cu_up:
+  f1u:
+    socket:
+      - bind_addr: 127.0.10.15
+
+buffer_pool:
+  nof_segments: 1048576
+  segment_size: 4096
+
+log:
+  # filename: stdout
+  all_level: warning
+  rrc_level: info
+  # phy_level: info
+  # rlc_level: info
+  # ofh_level: warning
+  # mac_level: debug
+  # broadcast_enabled: true
+
+#metrics:
+  #addr: 0.0.0.0                       # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address.
+  #port: 8030                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
+  #enable_json: true                    # Optional BOOLEAN (false). Enable JSON metrics reporting
+  #enable_log: false                     # Optional BOOLEAN (false). Enable log metrics reporting
+
+  #layers:
+    #enable_app_usage: true               # Optional BOOLEAN (false). Enable application usage metrics
+    #enable_e1ap: true                    # Optional BOOLEAN (false). Enable E1AP metrics
+    #enable_pdcp: true                    # Optional BOOLEAN (false). Enable PDCP metrics
+
+  #periodicity:
+    #app_usage_report_period: 10000         # Optional UINT (1000). Application resource usage metrics report period in milliseconds
+    #cu_cp_report_period: 10000             # Optional UINT (1000). CU-CP metrics report period in milliseconds
+    #cu_up_report_period: 10000             # Optional UINT (1000). CU-UP metrics report period in milliseconds
