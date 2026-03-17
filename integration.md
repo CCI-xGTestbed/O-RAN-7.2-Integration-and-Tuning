@@ -43,16 +43,7 @@ This guide documents the complete process to deploy srsRAN (commit 122a) with a 
 
 ## Hardware Requirements
 
-| Component | Details |
-|-----------|---------|
-| **Server** | Dell PowerEdge with Intel(R) Xeon(R) Silver 4416+, 40 cores |
-| **OS** | Ubuntu 22.04.5 LTS with kernel 5.15.0-1032-realtime |
-| **NIC** | Intel E810XXVDA4TGG1 Quad Port 25/10GbE SFP28 Ethernet Network Adapter with IEEE 1588  SyncE with GNSS Mezzanine |
-| **O-RU** | Benetel RAN650, Band n78 |
-| **SFPs** | 10G multimode SFP modules (HiFiber 10G base SR SFP+ 850 nm, 300 m) |
-| **Fiber** | OM4 multimode fiber |
-| **UEs** | OnePlus 8T, Samsung A23, Quectel RM510 Modem |
-| **RF Accessories** | 10W 30dB attenuators for O-RU RF outputs connected to sub-6 multiband antennas |
+The detailed hardware and software components can be found in the README.md file. 
 
 ---
 
