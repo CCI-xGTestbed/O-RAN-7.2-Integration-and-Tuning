@@ -5,11 +5,11 @@ gnb_id_bit_length: 32
 gnb_du_id: 0
 
 f1ap:
-  cu_cp_addr: 127.0.0.40
-  bind_addr: 127.0.0.40
+  cu_cp_addr: 127.0.0.40 # Local or Public IP to connect to CU-CP
+  bind_addr: 127.0.0.40 # Local address to bind
 
 f1u:
-  socket: 127.0.10.15
+  socket: 127.0.10.15 # Local or Public IP to connect CU-UP
 
 
 cell_cfg:
@@ -86,9 +86,9 @@ ru_ofh:
   iq_scaling: 13                                                             # IQ SCALING HERE
   warn_unreceived_ru_frames: always
   cells:
-    - network_interface: 0000:0d:01.0
-      ru_mac_addr: 8c:1f:64:d1:12:b9
-      du_mac_addr: 6e:68:9f:fd:d4:75
+    - network_interface: 0000:0b:01.0 #set to the PCI address of your fronthaul NIC for DPDK
+      ru_mac_addr: 00:11:22:33:44:69 #set to the MAC address of the port of your Benetel RAN650 connected to the Fronthaul
+      du_mac_addr: 00:11:22:33:44:67 #set to the MAC address of your DU server's fronthaul NIC (or the VF associated with it if using SR-IOV)
       vlan_tag_cp: 6
       vlan_tag_up: 6
       prach_port_id: [4, 5]
@@ -96,7 +96,7 @@ ru_ofh:
       ul_port_id: [0, 1]
 
 hal:
- eal_args: "--lcores (0-1)@(0-31) -a 0000:0d:01.0"
+ eal_args: "--lcores (0-1)@(0-31) -a 0000:0b:01.0" #update the PCI address and CPU core affinity to match your hardware for DPDK
 
 expert_phy:
   max_request_headroom_slots: 2 #0
@@ -134,23 +134,5 @@ log:
   # ofh_level: warning
   # mac_level: debug
   # broadcast_enabled: true
-
-metrics:
-  #autostart_stdout_metrics: false       # Optional BOOLEAN (false). Sets whether or note to autostart stdout metrics reporting. Supported [false, true].
-  addr: 10.147.20.193                       # Optional TEXT:IPV4 (127.0.0.1). Sets the metrics address. Supported: IPV4 address.
-  port: 55555                           # Optional UINT. Sets the metrics UPD port. Supported: [0 - 65535].
-  enable_json: true                    # Optional BOOLEAN (false). Enable JSON metrics reporting
-  #enable_log: false                     # Optional BOOLEAN (false). Enable log metrics reporting
-
-  #layers:
-    #enable_app_usage: true               # Optional BOOLEAN (false). Enable application usage metrics
-    #enable_sched: true                    # Optional BOOLEAN (true). Enable DU scheduler metrics
-    #enable_rlc: true                     # Optional BOOLEAN (false). Enable RLC metrics
-    #enable_mac: true                     # Optional BOOLEAN (false). Enable MAC metrics
-    #enable_executor: true                # Optional BOOLEAN (false). Whether to log DU-high executor metrics
-    #enable_du_low: true                  # Optional BOOLEAN (false). Enable DU low metrics (upper physical layer)
-    #enable_ru: true                      # Optional BOOLEAN (false). Enable Radio Unit metrics
-
-  #periodicity:
     #app_usage_report_period: 10000         # Optional UINT (1000). Application resource usage metrics report period in milliseconds
     #du_report_period: 10000                # Optional UINT:INT (1000). DU statistics report period in milliseconds. Format: [0 - 10485760].
