@@ -17,7 +17,7 @@ Wait for the O-RU to come back online:
 ping 10.10.0.100
 ```
 
-**Step 2 — Start PTP synchronization (Terminal 1 on DU Machine):**
+**Step 2 — Start PTP4L synchronization (Terminal 1 on DU Machine):**
 
 ```bash
 sudo su
