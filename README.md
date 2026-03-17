@@ -52,6 +52,7 @@ Each bandwidth folder (`20MHz_Configs` and `40MHz_Configs`) contains three confi
 The provided configurations and documentation have been tested and validated with the below hardware/software setup. Any variation to this may require modifications to the configuration or deployment procedure.
 
 <img width="413" height="480" alt="Specs" src="https://github.com/user-attachments/assets/6c076adf-ed8e-442f-8b09-311fe8b472e2" />
+<img width="374" height="341" alt="image" src="https://github.com/user-attachments/assets/d4254964-af04-4383-9230-cc0eedca6bdd" />
 
 ---
 
