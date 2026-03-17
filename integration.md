@@ -43,7 +43,7 @@ This guide documents the complete process to deploy srsRAN (commit 122a) with a 
 
 ## Hardware Requirements
 
-The detailed hardware and software components can be found in the README.md file. 
+The detailed hardware and software components and specific versions can be found in the README.md file. 
 
 ---
 
@@ -60,6 +60,8 @@ Before installing the OS, configure the server BIOS:
    - Finish
 3. **Device Settings > RAID Controller > Action/Configure > Auto Configure RAID 0**
    - Confirm/Yes
+  
+BIOs changes for SR-IOV is provided in the SR-IOV section of this document.
 
 ### OS Installation
 
@@ -83,8 +85,6 @@ Verify that the PTP card is detected:
 ifconfig
 ip a
 ```
-
-Configure IDRAC for remote server management. The login username for IDRAC is `root` and the password is the machine password configured during Ubuntu installation.
 
 ### Real-time Kernel Installation
 
@@ -115,6 +115,7 @@ Identify the PCI addresses for the NIC:
 ```bash
 lspci | grep -i ethernet
 ```
+<img width="1633" height="342" alt="image" src="https://github.com/user-attachments/assets/48c222a5-658b-446e-83e6-8f41cb52cf30" />
 
 > **Note:** Record the PCI bus prefix shown here (e.g., `0d:00`). This will be referred to as `[YOUR_PCI_BUS]` throughout the guide. The full Physical Function (PF) PCI address will be `0000:[YOUR_PCI_BUS].0` (referred to as `[YOUR_PF_PCI_ADDRESS]`).
 
@@ -123,6 +124,9 @@ Check the interface mapping:
 ```bash
 ls -l /sys/class/net/ | grep [YOUR_PCI_BUS]
 ```
+
+<img width="1636" height="162" alt="image" src="https://github.com/user-attachments/assets/970833a8-7997-45f7-ad77-146db87be135" />
+
 
 Install dependencies:
 
@@ -155,6 +159,10 @@ modinfo ice
 sudo modprobe ice
 sudo ethtool -i enp13s0f0
 ```
+<img width="1631" height="360" alt="image" src="https://github.com/user-attachments/assets/a88894eb-4752-4605-83d3-6672e57c9dcb" />
+
+<img width="1320" height="517" alt="image" src="https://github.com/user-attachments/assets/8bf733a3-74eb-46c3-b9df-62e6209e92f6" />
+
 
 Since we installed `ice` for the generic Ubuntu kernel, we now need to build it again for the realtime kernel:
 
@@ -191,6 +199,7 @@ cd E810/Linux_x64
 chmod 755 nvmupdate64e
 sudo ./nvmupdate64e
 ```
+<img width="1629" height="581" alt="image" src="https://github.com/user-attachments/assets/078a7e7e-ec8a-4419-bef5-6bdaaad6874b" />
 
 Follow the on-screen prompts to update the firmware. When prompted to back up NVM images, select **Y**.
 
@@ -201,6 +210,9 @@ sudo ethtool -i enp13s0f0 | grep firmware
 ```
 
 Expected output:
+
+<img width="1630" height="118" alt="image" src="https://github.com/user-attachments/assets/bc89ef12-ecde-472a-be19-75467babec7b" />
+
 
 ```
 firmware-version: 4.40 0x8001c96a 1.3534.0
@@ -218,6 +230,7 @@ cd linuxptp-4.3
 make
 sudo make install
 ```
+<img width="1639" height="243" alt="image" src="https://github.com/user-attachments/assets/16c549f4-7df4-4c55-9c9e-d51913fbf855" />
 
 **Install Synce4l:**
 
@@ -228,6 +241,9 @@ sudo apt-get install libnl-genl-3-dev
 make
 sudo make install
 ```
+
+<img width="1369" height="230" alt="image" src="https://github.com/user-attachments/assets/4e4e8143-dd6d-4c07-b450-0e773f13f805" />
+
 
 **Verify PTP capability:**
 
@@ -241,7 +257,7 @@ ethtool -T enp13s0f0
 # Find all interfaces with the same subsystem device (replace {} with output of the first command)
 grep {} /sys/class/net/*/device/subsystem_device | awk -F"/" '{print $5}'
 ```
-
+<img width="1392" height="759" alt="image" src="https://github.com/user-attachments/assets/07f0d5bd-be31-453b-9630-1becb1ea5ec1" />
 We have provided our PTP Configuration file for usage with phc2sys in this repository, you are free to use it when you go to run.
 
 ---
@@ -265,6 +281,8 @@ ninja
 sudo meson install
 sudo ldconfig
 ```
+
+<img width="1669" height="320" alt="image" src="https://github.com/user-attachments/assets/20345bc2-5d76-4e29-95a3-38329322e60f" />
 
 ### GRUB Configuration for Hugepages and IOMMU
 
@@ -329,6 +347,7 @@ sudo systemctl stop systemd-timesyncd
 sudo systemctl disable systemd-timesyncd
 sudo timedatectl set-ntp false
 ```
+<img width="1634" height="281" alt="image" src="https://github.com/user-attachments/assets/c122b89a-c50f-4b62-a448-b691ca57241b" />
 
 Now reboot the system:
 
@@ -527,8 +546,20 @@ ip a
 **Step 2:** Reboot the Dell server and enter BIOS (F2):
 
 1. Go to **System BIOS Settings > Integrated Devices** and make sure **SR-IOV Global Enable** is **Enabled**.
+
+<img width="1615" height="762" alt="image" src="https://github.com/user-attachments/assets/d14cfd91-b2e7-4115-a707-dc2ecbe7fa0a" />
+
+
 2. Go to **Device Settings**, select the NIC with the corresponding MAC address.
+
+<img width="1540" height="793" alt="image" src="https://github.com/user-attachments/assets/ad1b4deb-3c43-4629-994c-6617b3a8af9b" />
+
+
 3. Go to **Device Level Configuration** and set **Virtualization Mode** to **SR-IOV** (default is None).
+
+<img width="1497" height="333" alt="image" src="https://github.com/user-attachments/assets/d69da782-feb8-426c-8262-d616ca81f58c" />
+
+
 4. Reboot.
 
 **Step 3:** Verify that SR-IOV capability is present:
@@ -538,6 +569,7 @@ sudo lspci -vvv -s [YOUR_PF_PCI_ADDRESS] | grep -i "single root" -A 10
 ls /sys/class/net/enp13s0f0/device/ | grep sriov
 cat /sys/class/net/enp13s0f0/device/sriov_totalvfs
 ```
+<img width="1635" height="831" alt="image" src="https://github.com/user-attachments/assets/a2bd2645-2580-4541-a33f-6f10f743f5e1" />
 
 ### Manual SR-IOV Configuration
 
@@ -559,7 +591,7 @@ Set VF MAC address and disable spoof checking. Choose a MAC address for your DU 
 ip link set enp13s0f0 vf 0 mac [YOUR_DU_MAC] spoofchk off
 ```
 
-Configure VLAN tag if needed:
+Configure VLAN tag only if needed:
 
 ```bash
 ip link set enp13s0f0 vf 0 vlan 3 spoofchk off
@@ -571,6 +603,7 @@ ip link set enp13s0f0 vf 0 vlan 3 spoofchk off
 cd /home/[YOUR_USERNAME]/[YOUR_DPDK_PATH]/dpdk-23.11/usertools/
 ./dpdk-devbind.py --status
 ```
+<img width="1634" height="582" alt="image" src="https://github.com/user-attachments/assets/9d4fabe1-3684-4dd0-b511-046e135a8bd0" />
 
 > **Note:** Record the VF PCI address from the output. This will be referred to as `[YOUR_VF_PCI_ADDRESS]` throughout the guide. It will typically be one sub-function after the PF (e.g., if PF is `0000:0d:00.0`, VF might be `0000:0d:01.0`).
 
@@ -580,6 +613,8 @@ cd /home/[YOUR_USERNAME]/[YOUR_DPDK_PATH]/dpdk-23.11/usertools/
 cd /home/[YOUR_USERNAME]/[YOUR_DPDK_PATH]/dpdk-23.11/usertools/
 ./dpdk-devbind.py --bind=vfio-pci [YOUR_VF_PCI_ADDRESS]
 ```
+<img width="1653" height="192" alt="image" src="https://github.com/user-attachments/assets/fb3656a4-100e-4535-ba4c-96a6f2e7b855" />
+
 
 ### Automate SR-IOV Configuration at Boot
 
