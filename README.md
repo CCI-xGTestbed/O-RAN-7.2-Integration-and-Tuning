@@ -4,9 +4,9 @@
 
 This repository contains the configuration files and integration documentation used for deploying a 5G New Radio (NR) standalone network using the [srsRAN Project](https://github.com/srsran/srsRAN_Project) (now [OCUDU](https://gitlab.com/ocudu/ocudu)) gNB stack with a **Benetel RAN650 O-RU** as the radio front-end, following the O-RAN fronthaul (Open Fronthaul) interface specification. The deployment was set up and evaluated at the **Commonwealth Cyber Initiative (CCI) xG Testbed** at Virginia Tech, Arlington, Virginia, USA. This work was accepted for publication:
 
->**A. Tripathi, F. Bashar, Madhura Adeppady, A. Da Silva and S. F. Midkiff, Varun Singh 
-"O-RAN 7.2x Deployment: Insights from Laboratory Integration to Field Trials,"  
-IEEE International Conference on Communications (ICC), Glasgow, Scotland, 2026**  
+>**A. Tripathi, F. Bashar, M. Adeppady, A. Da Silva, S. F. Midkiff and V. Singh, 
+"O-RAN 7.2x Deployment: Insights from Laboratory Integration to Field Trials"  
+IEEE International Conference on Communications (ICC) OpenRAN WS, Glasgow, Scotland, 2026**  
 
 
 ## Repository Structure
