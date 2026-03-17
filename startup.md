@@ -39,6 +39,8 @@ sudo su
     -f /home/[YOUR_USER]/srs-ptp-gm.cfg
 ```
 
+The above ptp4l and phc2sys can also be configured to run as system services to maintain a consistent lock and persistent transmission of the clock data over OFH to the O-RU such that running these commands over and over is not necessary.
+
 **Step 4 — Verify PTP synchronization on O-RU (Terminal 3) on DU Machine:**
 
 ```bash
@@ -58,14 +60,14 @@ sudo ./5gc
 **Step 6 — Start srsRAN CU (Terminal 5) on CU Machine:**
 
 ```bash
-cd ~/srsRAN_Project/apps/cu
-sudo ./srscu -c ran650_cu.yml
+cd ~/srsRAN_Project/build/apps/cu
+sudo ./srscu -c ../[PATH_TO]/ran650_cu.yml
 ```
 
 **Step 7 — Start srsRAN DU (Terminal 6) on DU Machine:**
 ```bash
-cd ~/srsRAN_Project/apps/du
-sudo ./srscu -c ran650_du.yml
+cd ~/srsRAN_Project/build/apps/du
+sudo ./srsdu -c ../[PATH_TO]/ran650_du.yml
 ```
 
 ### Verification
